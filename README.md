@@ -119,3 +119,12 @@ git push heroku master -> git push heroku develop:master に変更
 ・「micropostは一人のユーザーに属するよ」
     -> belongs_to :user | app/models/micropost.rb
 ```
+
+## レビュー
+https://github.com/shmn7iii/rails_tutorial/pull/2
+```planetext
+見反映FYI
+https://github.com/shmn7iii/rails_tutorial/pull/2#discussion_r818427570
+https://github.com/shmn7iii/rails_tutorial/pull/2#discussion_r818433316
+https://github.com/shmn7iii/rails_tutorial/pull/2#discussion_r818435908
+```
