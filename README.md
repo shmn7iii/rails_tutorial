@@ -1,24 +1,20 @@
-# README
+# 第2章
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+成果物：https://morning-tor-81081.herokuapp.com/
 
-Things you may want to cover:
 
-* Ruby version
+## 学び
 
-* System dependencies
+```planetext
+・「scaffoldコード」
+    -> サクッと作るならでら便利だけどややこしいし読みづらい
 
-* Configuration
+・「:userみたいなやつ」
+    -> "シンボル"と呼ばれる
 
-* Database creation
+・「ユーザーがmicropostをたくさん持つよ」
+    -> has_many :microposts | app/models/user.rb
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+・「micropostは一人のユーザーに属するよ」
+    -> belongs_to :user | app/models/micropost.rb
+```
