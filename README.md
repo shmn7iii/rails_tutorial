@@ -102,6 +102,21 @@ rails new したディレクトリ配下に.gitがあるのでGitHubに上げる
 git push heroku master -> git push heroku develop:master に変更
 ```
 
+## レビュー
+https://github.com/shmn7iii/rails_tutorial/pull/1
+
+```planetext
+# コメント
+--------------------------------------------------------------------------
+・「ファイル末尾には改行を入れる」
+    -> 便利な拡張機能もある cf. https://qiita.com/norikt/items/83674fadd79a88bf7824
+
+# FYI
+--------------------------------------------------------------------------
+・「config/master.keyがアップされてる」
+    -> .gitignoreの取り違えミス
+```
+
 # 第2章
 
 ## 学び
@@ -124,6 +139,8 @@ git push heroku master -> git push heroku develop:master に変更
 https://github.com/shmn7iii/rails_tutorial/pull/2
 
 ```planetext
+# コメント
+--------------------------------------------------------------------------
 ・「不要ファイルは消していい」
     -> app/assets/stylesheets/users.scss, microposts.scss
        app/helpers/users_helper.rb, microposts_helper.rb
@@ -137,11 +154,24 @@ https://github.com/shmn7iii/rails_tutorial/pull/2
        def set_user
          @user = User.find(params[:id])
        end
-```
 
-```planetext
-見反映FYI
-https://github.com/shmn7iii/rails_tutorial/pull/2#discussion_r818427570
-https://github.com/shmn7iii/rails_tutorial/pull/2#discussion_r818433316
-https://github.com/shmn7iii/rails_tutorial/pull/2#discussion_r818435908
+# FYI
+--------------------------------------------------------------------------
+・「実際のサービスでは null: false などバリデーションを指定することが多い」
+    -> ここ：db/migrate/20220303055523_create_users.rb
+       チュートリアル内でもここについて指摘あったのでこの先の章で説明出てくるかも
+
+・「実際のサービスでは t.references :user などと書くことが多い」
+    -> ここ：db/migrate/20220303061143_create_microposts.rb
+       cf. https://qiita.com/ryouzi/items/2682e7e8a86fd2b1ae47
+       メリット：
+        ・userではなくuser_idというカラム名を作成してくれる
+        ・インデックスを自動で張ってくれる
+
+# 見反映FYI
+--------------------------------------------------------------------------
+・「デフォルトのテンプレートエンジンは erb よりスッキリな slim がよく使われる」
+    -> cf. https://qiita.com/ngron/items/c03e68642c2ab77e7283」
+       今回のチュートリアルはerbのまま進める
+       HTML苦手マン的にはめちゃくちゃ嬉しいslim
 ```
