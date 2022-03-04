@@ -122,6 +122,23 @@ git push heroku master -> git push heroku develop:master に変更
 
 ## レビュー
 https://github.com/shmn7iii/rails_tutorial/pull/2
+
+```planetext
+・「不要ファイルは消していい」
+    -> app/assets/stylesheets/users.scss, microposts.scss
+       app/helpers/users_helper.rb, microposts_helper.rb
+
+・「シンボルの配列は%記法を用いることが多い」
+    -> before_action :set_micropost, only: [:show, :edit, :update, :destroy]
+       before_action :set_micropost, only: %i[show, edit, update, destroy]
+
+・「privateメソッドの中身はインデント揃えるのが一般的」
+    -> private
+       def set_user
+         @user = User.find(params[:id])
+       end
+```
+
 ```planetext
 見反映FYI
 https://github.com/shmn7iii/rails_tutorial/pull/2#discussion_r818427570
