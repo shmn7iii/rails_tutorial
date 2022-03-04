@@ -1,17 +1,18 @@
-# README
+# Rails Tutorial
 
-[Ruby on Rails チュートリアル 第1章](https://railstutorial.jp/chapters/beginning?version=6.0#cha-beginning)
 
-Heroku: https://gentle-shore-22479.herokuapp.com/
+~~成果物：https://gentle-shore-22479.herokuapp.com/~~
+
+成果物：https://morning-tor-81081.herokuapp.com/
+
+# 第1章
 
 ## 備考
 
 - Cloud9ではなくローカル環境で作業
 - Git,GitHub関連の部分は適宜読み替え/読み飛ばし
 
-## log
-
-### 環境構築
+## 環境構築
 
 ```bash
 # homebrew
@@ -76,7 +77,7 @@ $ gem install rails -v 6.0.4
 $ rails --version
 ```
 
-### エラーログ
+## エラーログ
 ```bash
 $ mkdir environment
 $ cd environment
@@ -99,4 +100,78 @@ rails new したディレクトリ配下に.gitがあるのでGitHubに上げる
 
 ```bash
 git push heroku master -> git push heroku develop:master に変更
+```
+
+## レビュー
+https://github.com/shmn7iii/rails_tutorial/pull/1
+
+```planetext
+# コメント
+--------------------------------------------------------------------------
+・「ファイル末尾には改行を入れる」
+    -> 便利な拡張機能もある cf. https://qiita.com/norikt/items/83674fadd79a88bf7824
+
+# FYI
+--------------------------------------------------------------------------
+・「config/master.keyがアップされてる」
+    -> .gitignoreの取り違えミス
+```
+
+# 第2章
+
+## 学び
+
+```planetext
+・「scaffoldコード」
+    -> サクッと作るならでら便利だけどややこしいし読みづらい
+
+・「:userみたいなやつ」
+    -> "シンボル"と呼ばれる
+
+・「ユーザーがmicropostをたくさん持つよ」
+    -> has_many :microposts | app/models/user.rb
+
+・「micropostは一人のユーザーに属するよ」
+    -> belongs_to :user | app/models/micropost.rb
+```
+
+## レビュー
+https://github.com/shmn7iii/rails_tutorial/pull/2
+
+```planetext
+# コメント
+--------------------------------------------------------------------------
+・「不要ファイルは消していい」
+    -> app/assets/stylesheets/users.scss, microposts.scss
+       app/helpers/users_helper.rb, microposts_helper.rb
+
+・「シンボルの配列は%記法を用いることが多い」
+    -> before_action :set_micropost, only: [:show, :edit, :update, :destroy]
+       before_action :set_micropost, only: %i[show, edit, update, destroy]
+
+・「privateメソッドの中身はインデント揃えるのが一般的」
+    -> private
+       def set_user
+         @user = User.find(params[:id])
+       end
+
+# FYI
+--------------------------------------------------------------------------
+・「実際のサービスでは null: false などバリデーションを指定することが多い」
+    -> ここ：db/migrate/20220303055523_create_users.rb
+       チュートリアル内でもここについて指摘あったのでこの先の章で説明出てくるかも
+
+・「実際のサービスでは t.references :user などと書くことが多い」
+    -> ここ：db/migrate/20220303061143_create_microposts.rb
+       cf. https://qiita.com/ryouzi/items/2682e7e8a86fd2b1ae47
+       メリット：
+        ・userではなくuser_idというカラム名を作成してくれる
+        ・インデックスを自動で張ってくれる
+
+# 見反映FYI
+--------------------------------------------------------------------------
+・「デフォルトのテンプレートエンジンは erb よりスッキリな slim がよく使われる」
+    -> cf. https://qiita.com/ngron/items/c03e68642c2ab77e7283」
+       今回のチュートリアルはerbのまま進める
+       HTML苦手マン的にはめちゃくちゃ嬉しいslim
 ```
