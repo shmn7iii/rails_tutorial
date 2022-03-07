@@ -1,8 +1,9 @@
-# [Ruby on Rails Tutorial](https://railstutorial.jp/)
+# 第1章
 
+## 備考
 
-~~成果物：https://gentle-shore-22479.herokuapp.com/~~  
-成果物：https://morning-tor-81081.herokuapp.com/
+- Cloud9ではなくローカル環境で作業
+- Git,GitHub関連の部分は適宜読み替え/読み飛ばし
 
 ## 環境構築
 
@@ -68,3 +69,44 @@ $ gem install rails -v 6.0.4
 # 確認
 $ rails --version
 ```
+
+## エラーログ
+```bash
+$ mkdir environment
+$ cd environment
+$ rails _6.0.4_ new hello_app
+(Gemfile書き換え)
+$ cd hello_app
+$ bundle _2.2.17_ install
+ # => エラーでる
+$ bundle _2.2.17_ update
+$ bundle _2.2.17_ install
+$ rails webpacker:install
+ # => めちゃくちゃコンフリクトするけど全部"y"で飛ばす
+ # したらできる
+```
+
+```bash
+rails new したディレクトリ配下に.gitがあるのでGitHubに上げるときにエラーでた
+-> 消せばOK -> というかその先でもエラー吐くので素直に直下にプロジェクト置くべき
+```
+
+```bash
+git push heroku master -> git push heroku develop:master に変更
+```
+
+## レビュー
+https://github.com/shmn7iii/rails_tutorial/pull/1
+
+
+### コメント
+
+- 「ファイル末尾には改行を入れる」
+
+    [便利な拡張機能](https://qiita.com/norikt/items/83674fadd79a88bf7824)もある
+
+### FYI
+
+- 「config/master.keyがアップされてる」
+
+    .gitignoreの取り違えミス
