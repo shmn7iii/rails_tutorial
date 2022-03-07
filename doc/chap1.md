@@ -1,28 +1,9 @@
-# [Ruby on Rails Tutorial](https://railstutorial.jp/)
+# 第1章
 
+## 備考
 
-~~成果物：https://gentle-shore-22479.herokuapp.com/~~  
-成果物：https://morning-tor-81081.herokuapp.com/
-
-## 学び
-
-[第1章「ゼロからデプロイまで」](/doc/chap1.md)  
-[第2章「Toyアプリケーション」](/doc/chap2.md)  
-[第3章「ほぼ静的なページの作成」](/doc/chap3.md)  
-[第4章「Rails風味のRuby」](/doc/chap4.md)  
-[第5章「レイアウトを作成する」](/doc/chap5.md)  
-```text
-↓↓↓まだ↓↓↓  
-[第6章「ユーザーのモデルを作成する」](/doc/chap6.md)  
-[第7章「ユーザー登録」](/doc/chap7.md)  
-[第8章「基本的なログイン機構」](/doc/chap8.md)  
-[第9章「発展的なログイン機構」](/doc/chap9.md)  
-[第10章「ユーザーの更新・表示・削除」](/doc/chap10.md)  
-[第11章「アカウントの有効化」](/doc/chap11.md)  
-[第12章「パスワードの再設定」](/doc/chap12.md)  
-[第13章「ユーザーのマイクロポスト」](/doc/chap13.md)  
-[第14章「ユーザーをフォローする」](/doc/chap14.md)  
-```
+- Cloud9ではなくローカル環境で作業
+- Git,GitHub関連の部分は適宜読み替え/読み飛ばし
 
 ## 環境構築
 
@@ -88,3 +69,44 @@ $ gem install rails -v 6.0.4
 # 確認
 $ rails --version
 ```
+
+## エラーログ
+```bash
+$ mkdir environment
+$ cd environment
+$ rails _6.0.4_ new hello_app
+(Gemfile書き換え)
+$ cd hello_app
+$ bundle _2.2.17_ install
+ # => エラーでる
+$ bundle _2.2.17_ update
+$ bundle _2.2.17_ install
+$ rails webpacker:install
+ # => めちゃくちゃコンフリクトするけど全部"y"で飛ばす
+ # したらできる
+```
+
+```bash
+rails new したディレクトリ配下に.gitがあるのでGitHubに上げるときにエラーでた
+-> 消せばOK -> というかその先でもエラー吐くので素直に直下にプロジェクト置くべき
+```
+
+```bash
+git push heroku master -> git push heroku develop:master に変更
+```
+
+## レビュー
+https://github.com/shmn7iii/rails_tutorial/pull/1
+
+
+### コメント
+
+- 「ファイル末尾には改行を入れる」
+
+    [便利な拡張機能](https://qiita.com/norikt/items/83674fadd79a88bf7824)もある
+
+### FYI
+
+- 「config/master.keyがアップされてる」
+
+    .gitignoreの取り違えミス
