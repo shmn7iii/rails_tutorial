@@ -93,19 +93,19 @@ $ rails webpacker:install
  # したらできる
 ```
 
-```bash
+```text
 rails new したディレクトリ配下に.gitがあるのでGitHubに上げるときにエラーでた
 -> 消せばOK -> というかその先でもエラー吐くので素直に直下にプロジェクト置くべき
 ```
 
-```bash
+```text
 git push heroku master -> git push heroku develop:master に変更
 ```
 
 ## レビュー
 https://github.com/shmn7iii/rails_tutorial/pull/1
 
-```planetext
+```text
 # コメント
 --------------------------------------------------------------------------
 ・「ファイル末尾には改行を入れる」
@@ -121,7 +121,7 @@ https://github.com/shmn7iii/rails_tutorial/pull/1
 
 ## 学び
 
-```planetext
+```text
 ・「scaffoldコード」
     -> サクッと作るならでら便利だけどややこしいし読みづらい
 
@@ -138,7 +138,7 @@ https://github.com/shmn7iii/rails_tutorial/pull/1
 ## レビュー
 https://github.com/shmn7iii/rails_tutorial/pull/2
 
-```planetext
+```text
 # コメント
 --------------------------------------------------------------------------
 ・「不要ファイルは消していい」
@@ -180,7 +180,7 @@ https://github.com/shmn7iii/rails_tutorial/pull/2
 
 ## 学び
 
-```planetext
+```text
 ・「.keepファイルについて」
     -> rails new 時に –skip-keeps オプション追加で生成されないようにできる
        cf. https://railsdoc.com/page/rails_new
@@ -237,7 +237,7 @@ https://github.com/shmn7iii/rails_tutorial/pull/2
 # 第4章
 
 ## 学び
-```panetext
+```text
 ・「カスタムヘルパー」
     -> ユーザー定義の組み込み関数みたいな
        ヘルパーってなんだろうと思ってたけど文字通りヘルパーだった
@@ -247,7 +247,7 @@ https://github.com/shmn7iii/rails_tutorial/pull/2
 
 ・「Rubyではあらゆるものがオブジェクト」
     -> false, nil のみ、オブジェクトそのものの理論値がfalse
-       その他全てのオブジェクトはtrue
+       その他全てのオブジェクトはtrue => 0 や[](空のarray)などもtrueになる
        !!をつけるとどんなオブジェクトも強制的に理論値に変換できる
 
 ・「Rubyのメソッドには暗黙の戻り値がある」
@@ -273,6 +273,7 @@ https://github.com/shmn7iii/rails_tutorial/pull/2
 
 ・「mapメソッド」
     -> 渡されたブロックを配列や範囲に適用する
+       cf. https://qiita.com/massaaaaan/items/d90d10cb023bedc74fb2
 
 ・「“symbol-to-proc”」
     -> >> %w[A B C].map { |char| char.downcase }
@@ -289,6 +290,7 @@ https://github.com/shmn7iii/rails_tutorial/pull/2
     -> user = { :name => "Michael Hartl", :email => "michael@example.com" }
        Ruby 1.9からは以下でも表記可能
        user = { name: "Michael Hartl", email: "michael@example.com" }
+       基本こっち
 
 ・「引数の最後のハッシュは波括弧を省略できる」
     -> user = User.new(name: "Michael Hartl", email: "mhartl@example.com")
@@ -314,4 +316,15 @@ https://github.com/shmn7iii/rails_tutorial/pull/2
    考えられています」
 
 ・「Railsは確かにRubyで書かれているが、既にRubyとは別物である」
+```
+
+## レビュー
+
+https://github.com/shmn7iii/rails_tutorial/pull/5
+
+```text
+一部は”学び”セクションに追記
+
+・「<a> link」
+  -> rails だし link_to を使った方がいい
 ```
