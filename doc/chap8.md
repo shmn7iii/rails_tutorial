@@ -26,7 +26,8 @@
     end
     ```
     これだと `current_user` 使うたびにDBに問い合わせるのでだるい  
-    -> Rubyの慣習に従い、User.find_byの実行結果をインスタンス変数に保存する工夫
+    -> Rubyの慣習に従い、User.find_byの実行結果をインスタンス変数に保存する工夫  
+    > いわゆるメモ化
     ```ruby
     def current_user
       if session[:user_id]
@@ -51,11 +52,6 @@
     こういうのを「短絡評価（short-circuit evaluation）」と呼ぶ  
     > `||`式を左から右に評価し、演算子の左の値が最初にtrueになった時点で処理を終了するという評価法
 
-    > FYI  
-    > いわゆるメモ化とよばれるものですね。  
-    > 今回の場合これで問題無いですが、検索結果がnilとなるパターンが想定される場合にはinstance_variable_defined?を用い、不要な検索が行われるのを避けることがあります。  
-    > https://qiita.com/toya108/items/c0d241945317a2f08c13
-
 - 「fixture（フィクスチャ）」  
     テストに必要なデータをtestデータベースに読み込んでおくことができる  
     今回は test/fixture/users.yaml でYAML形式で保存
@@ -70,6 +66,30 @@
 ## レビュー
 
 ### FYI
+
+- 「『`||=`』と『`instance_variable_defined?`』」  
+    ```ruby
+    # ||=のメモ化
+    def current_user
+      @current_user ||= find_by(id: 1)
+    end
+
+    # instance_variable_defined?のメモ化
+    def current_user
+      return @current_user if instance_variable_defined? :@current_user
+      @current_user = find_by(id: 1)
+    end
+    ```
+    おんなじようなことやってくれるけど...  
+    検索結果（今回は `find_by(id: 1)` の結果）が `nil` の場合、
+    `instance_variable_defined` は `find_by` を呼ばずに `nil` を返す  
+    つまり `||=` は結果が `nil` だった場合はメモ化されない  
+
+    まとめると  
+    > 右辺に `nil` が返ってくる可能性がある式でメモ化を行う場合、
+    > 定義済みの `nil` をメモ化したければ `instance_variable_defined?` を使うと良い
+
+    参考：[「Rubyのメモ化における「||=」と「instance_variable_defined?」の違い」]()
 
 - 「.save / .save!」  
     保存に失敗した時例外を吐かせたい（エラーを出したい）場合は `save!`   
