@@ -51,6 +51,11 @@
     こういうのを「短絡評価（short-circuit evaluation）」と呼ぶ  
     > `||`式を左から右に評価し、演算子の左の値が最初にtrueになった時点で処理を終了するという評価法
 
+    > FYI  
+    > いわゆるメモ化とよばれるものですね。  
+    > 今回の場合これで問題無いですが、検索結果がnilとなるパターンが想定される場合にはinstance_variable_defined?を用い、不要な検索が行われるのを避けることがあります。  
+    > https://qiita.com/toya108/items/c0d241945317a2f08c13
+
 - 「fixture（フィクスチャ）」  
     テストに必要なデータをtestデータベースに読み込んでおくことができる  
     今回は test/fixture/users.yaml でYAML形式で保存
@@ -61,3 +66,11 @@
     - if user && user.authenticate(params[:session][:password])
     + if user&.authenticate(params[:session][:password])
     ```
+
+## レビュー
+
+### FYI
+
+- 「.save / .save!」  
+    保存に失敗した時例外を吐かせたい（エラーを出したい）場合は `save!`   
+    処理を分岐させたい場合は `save`
