@@ -50,3 +50,7 @@
 - 「本番環境のSSL化」  
     config/environments/production.rb で `config.force_ssl = true` を書くだけ  
     チャレキャラでCloudFront駆使して迂回させまくった時とは違う解法
+
+- 「HerokuのDBがリセットできない」  
+    権限で怒られた  
+    これで解決：[「heroku上でのDB(postgres)リセットからのmigration実行方法」](https://qiita.com/motoki4917/items/1bc8d539f36852abf090)
