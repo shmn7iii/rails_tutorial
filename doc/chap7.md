@@ -55,3 +55,8 @@
 - 「HerokuのDBがリセットできない」  
     権限で怒られた  
     これで解決：[「heroku上でのDB(postgres)リセットからのmigration実行方法」](https://qiita.com/motoki4917/items/1bc8d539f36852abf090)
+
+
+## レビュー
+
+[第8章](/doc/chap8.md)でまとめて
