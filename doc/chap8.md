@@ -53,7 +53,7 @@
 
 - 「fixture（フィクスチャ）」  
     テストに必要なデータをtestデータベースに読み込んでおくことができる  
-    今回は[test/fixtuure/users.yaml](/test/fixtuure/users.yaml)でYAML形式で保存
+    今回は test/fixture/users.yaml でYAML形式で保存
 
 - 「safe navigation演算子（ぼっち演算子）」  
     `obj && obj.method` のようなパターンを` obj&.method` のように凝縮した形で書ける
