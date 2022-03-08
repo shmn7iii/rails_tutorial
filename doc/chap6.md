@@ -28,9 +28,13 @@
 
 - 「User.find / .find_by / .first / .all」  
     `.find` idを引数にとってオブジェクトを返す  
-    `.find_by` 任意の属性を引数にとってオブジェクトを返す  
+    `.find_by` 任意の属性を引数にとってオブジェクトを返す 返ってくるのは最初の一つ  
+    `.find_by!` .find_byで見つからなかった時は例外の発生なしにnilが返ってくる ->
+    `!` を付けると例外を発生してくれる  
+    `.where` 与えられた条件にマッチする結果を全て返す  
     `.first` DBの最初のオブジェクトを返す  
     `.all` DBの全てのオブジェクトを返す  
+
 
     この辺り、チャレキャラでなんもわからんまま適当に触ってた。
     そういうの「ダックタイピング（duck typing）」と呼ぶらしい。  
@@ -84,3 +88,49 @@
     モデルに追加することでセキュアなパスワードを扱えるようになる  
     パスワードはハッシュ化されて保存される  
     `authenticate` で軽い認証もできる
+
+## レビュー
+
+### コメント
+
+- 「`app/assets/stylesheets/users.scss` は消してOK」  
+
+- 「`app/helpers/users_helper.rb` も消してOK」  
+    消すとtestが通らなくなるので今回は残しました
+
+- 「見やすさを心がけよう」  
+    ```diff
+    - validates :name,  presence: true, length: { maximum: 50 }
+    - VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+    - validates :email, presence: true, length: { maximum: 255 },
+    -                     format: { with: VALID_EMAIL_REGEX },
+    -                     uniqueness: { case_sensitive: false }
+    - has_secure_password
+    - validates :password, presence: true, length: { minimum: 6 }
+    + VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+    + has_secure_password
+    + 
+    + validates :name,  presence: true, length: { maximum: 50 }
+    + validates :email, presence: true, length: { maximum: 255 },
+    +                     format: { with: VALID_EMAIL_REGEX },
+    +                     uniqueness: { case_sensitive: false }
+    + validates :password, presence: true, length: { minimum: 6 }
+    ```
+
+- 「`rails console --sandbox`」  
+    エイリアスは`rails c -s` 
+
+- 「rubocopなどLinterを使おう」  
+    以下の記事を参考に入れてみた  
+    https://qiita.com/d0ne1s/items/a3566aca023d11f2bfc4  
+    https://qiita.com/noraworld/items/3e5179d2ec3313b25c20  
+
+    あとVS Codeの空白消す設定、markdownの末尾消されるから切ってたけど解決策あったので有効化した  
+    https://qiita.com/otera@github/items/d715f760aab2f6e88e67
+
+### 見反映FYI
+
+- 「migrationでemailにはバリデーションを付けるのが一般的」
+    ```ruby
+    t.string :email, null: false
+    ```

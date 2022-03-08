@@ -31,3 +31,7 @@
 - 「統合テスト（Integration Test）」  
     アプリケーションの動作を端から端まで（end-to-end）シミュレートしてテスト  
     実行は rails test:integration
+
+## レビュー
+
+[第6章](/doc/chap6.md)でまとめて
