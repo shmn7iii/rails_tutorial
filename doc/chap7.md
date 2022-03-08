@@ -35,8 +35,8 @@
     参考：[「Rubyのキーワード引数」](https://tokitsubaki.com/ruby-keyword-arguments/531/)
 
 
-- 「Strong Patameter」  
-    paramハッシュを丸ごと渡すのは危険  
+- 「Strong Parameter」  
+    paramハッシュを丸ごと渡すのは危険（admin=1とか渡されたらたまったもんじゃない）  
     必須のパラメータと許可されたパラメータを指定することができる  
     今回だったらname,email,password,password_confirmationを許可する的な
 
@@ -46,6 +46,7 @@
 
 - 「flash」  
     flash変数に代入したメッセージは、リダイレクトした直後のページで表示できるようになる  
+    .nowつけたら一回だけとかもできる
 
 - 「本番環境のSSL化」  
     config/environments/production.rb で `config.force_ssl = true` を書くだけ  
