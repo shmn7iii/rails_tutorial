@@ -126,7 +126,10 @@
     https://qiita.com/noraworld/items/3e5179d2ec3313b25c20  
 
     あとVS Codeの空白消す設定、markdownの末尾消されるから切ってたけど解決策あったので有効化した  
-    https://qiita.com/otera@github/items/d715f760aab2f6e88e67
+    https://qiita.com/otera@github/items/d715f760aab2f6e88e67  
+    > ちなみに改行スペースは見にくい（改行しているかが見かけ上わからない）ので、
+    > \<br>タグを使ったり、空行を挿入するのが個人的にはおすすめです。
+    > もちろんこの辺の考え方は人それぞれなので、使いやすいと感じる物で問題なしです！
 
 ### 見反映FYI
 
