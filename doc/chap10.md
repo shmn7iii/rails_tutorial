@@ -12,7 +12,7 @@
 - 「ひとページに100人表示されても困る、30人くらいがいい」  
     みたいなやつは「ページネーション（pagination）」と呼ぶ
 
-- 「」
+- 「rails すごい」  
   ↓これを
   ```html
   <ul class="users">
@@ -23,7 +23,9 @@
   ```
   ↓こうしても
   ```html
-  <%= render @users %>
+  <ul class="users">
+    <%= render @users %>
+  </ul>
   ```
   Railsは `@users` をUserのリストと解釈して自動でコレクションを列挙してパーシャルに通してくれる
 
