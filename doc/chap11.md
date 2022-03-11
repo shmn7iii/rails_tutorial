@@ -67,3 +67,36 @@
 
 - 「本番環境でメールを送信するアドオンを追加する手順」  
     クレカの登録必須と言われたのでスキップします
+
+## レビュー
+
+### コメント
+
+- 「styleseet配下の未使用ファイル」  
+    毎回消し忘れる
+
+- 「未使用helperファイル」  
+    消すとテストがとおらなくなるのでチュートリアルでは残します
+
+- 「`%i[index, edit, update, destroy]`」  
+    これも忘れてた
+
+- 「インデント」  
+    こっちの方がいい
+    ```diff
+    - patch user_path(@user), params: { user: { name:  "",
+    -                                       email: "foo@invalid",
+    -                                       password:              "foo",
+    -                                       password_confirmation: "bar" } }
+    + patch user_path(@user), params: {
+    +   user: { name: '',
+    +           email: 'foo@invalid',
+    +           password: 'foo',
+    +           password_confirmation: 'bar' }
+    +}
+    ```
+
+### FYI
+
+- 「pagination」  
+    みたいなやつで、`kaminari` がよく使われる
