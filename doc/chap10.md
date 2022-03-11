@@ -54,3 +54,16 @@
     $ heroku run rails db:migrate
     $ heroku run rails db:seed
     ```
+    ローカルでリセットする場合は以下
+    ```bash
+    $ rails db:migrate:reset
+    $ rails db:seed
+    ```
+
+- 「Herokuの本番環境でFakerがwrong armument error」  
+    ローカルではまったく出ないエラーが本番で出る現象…
+
+    Fakerを最新版に更新することで解決（[commit: ca3f0a2](https://github.com/shmn7iii/rails_tutorial/commit/ca3f0a2ef6b28956eb2b49380b7233249c37ed26)）  
+    ```text
+    gem 'faker',   '2.20.0'
+    ```
