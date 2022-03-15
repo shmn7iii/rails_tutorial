@@ -1,3 +1,3 @@
-# 消すとテスト失敗する(たぶん)
+# 消すとテスト失敗する
 module RelationshipsHelper
 end
