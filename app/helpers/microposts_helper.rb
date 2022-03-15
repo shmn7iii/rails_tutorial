@@ -1,3 +1,3 @@
 # 消すとテスト失敗する
-module PasswordResetsHelper
+module MicropostsHelper
 end
