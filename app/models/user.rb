@@ -82,16 +82,25 @@ class User < ApplicationRecord
 
   # ユーザーのステータスフィードを返す
   def feed
-    following_ids = "SELECT followed_id FROM relationships
-                     WHERE follower_id = :user_id"
-    Micropost.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id", user_id: id)
+    # following_ids = "SELECT followed_id FROM relationships
+    #                  WHERE follower_id = :user_id"
+    # Micropost.where("user_id IN (#{following_ids})
+    #                  OR user_id = :user_id", user_id: id)
+
+    # following_ids = "SELECT followed_id FROM relationships
+    #                  WHERE follower_id = :user_id"
+    # Micropost.where(following_ids, user_id: id).or(Micropost.where(user_id: id))
 
     # 演習14.3.3.3
     # part_of_feed = "relationships.follower_id = :id or microposts.user_id = :id"
     # Micropost.left_outer_joins(user: :followers)
     #          .where(part_of_feed, { id: id }).distinct
     #          .includes(:user, image_attachment: :blob)
+
+    # レビューより、さらに簡単にも書ける
+    following_ids = "user_id IN (SELECT followed_id FROM relationships
+                                 WHERE follower_id = #{id})"
+    Micropost.where(following_ids).or(Micropost.where(user_id: id))
   end
 
   # ユーザーをフォローする
