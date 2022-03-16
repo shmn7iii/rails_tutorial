@@ -16,3 +16,7 @@
       reset_sent_at < 2.hours.ago
     end
     ```
+
+## レビュー
+
+[第14章](/doc/chap14.md)でまとめて

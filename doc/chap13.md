@@ -17,13 +17,13 @@
     ＊`new` メソッド同様、`build` メソッドはオブジェクトを返すがデータベースには反映されない
 
 - 「fixtureも関連付けできる」  
-    ```text
+    ```yaml
     orange:
       content: "I just ate an orange!"
       created_at: <%= 10.minutes.ago %>
       user: michael
     ```
-    ```text
+    ```yaml
     michael:
       name: Michael Example
       email: michael@example.com
@@ -123,3 +123,8 @@
 
 - 「user.microposts.count」  
     > 最後の課題はマイクロポストの投稿数を表示することですが、これはcountメソッドを使うことで解決できます。大事なことは、countメソッドではデータベース上のマイクロポストを全部読みだしてから結果の配列に対してlengthを呼ぶ、といった無駄な処理はしていないという点です。そんなことをしたら、マイクロポストの数が増加するにつれて効率が低下してしまいます。そうではなく、（データベース内での計算は高度に最適化されているので）データベースに代わりに計算してもらい、特定のuser_idに紐付いたマイクロポストの数をデータベースに問い合わせています。（それでもcountメソッドがアプリケーションのボトルネックになるようなことがあれば、さらに高速なcounter cacheを使うこともできます。）
+
+
+## レビュー
+
+[第14章](/doc/chap14.md)でまとめて

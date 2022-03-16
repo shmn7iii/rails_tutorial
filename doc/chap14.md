@@ -109,4 +109,102 @@
                      WHERE follower_id = :user_id"
     Micropost.where("user_id IN (#{following_ids}) 
                      OR user_id = :user_id", user_id: id)
+
+    # レビューより、さらに簡単にも書ける
+    following_ids = "user_id IN (SELECT followed_id FROM relationships
+                                 WHERE follower_id = #{id})"
+    Micropost.where(following_ids).or(Micropost.where(user_id: id))
     ```
+
+
+## レビュー
+
+### コメント
+
+- 「%記法の場合コンマは不要」  
+    ```ruby
+    %i[create destroy]
+    ```
+    スペース区切り。おそらくいつからか自分が取り違えてました…
+
+
+- 「map と each」
+    ```ruby
+    [1, 2, 3, 4].map { |i| i.to_s }
+    # => ["1", "2", "3", "4"]
+
+    [1, 2, 3, 4].each { |i| i.to_s }
+    # => [1, 2, 3, 4]
+    ```
+    `map` では要素すべてにto_sしてくれた。  
+    `each` ではそうはしてくれなかった。
+
+    これは  
+    「`map` はブロック内で行なった処理結果を元の配列にも適用させる、結果を保持してくれる」  
+    「`each` は単に繰り返し処理をブロック内で行い、元の配列は元のまま」  
+    であることから。
+
+
+### FYI
+
+- 「より簡単なwhere」  
+    5系から追加された以下の記法もある  
+    cd. https://style.potepan.com/articles/29804.html
+    ```ruby
+    Micropost.where(user_id: following_ids).or(Micropost.where(user_id: id))
+    ```
+    今回のアプリに適用させる場合、以下でエラーなく通った
+    ```ruby
+    following_ids = "user_id IN (SELECT followed_id FROM relationships
+                                 WHERE follower_id = #{id})"
+    Micropost.where(following_ids).or(Micropost.where(user_id: id))
+    ```
+
+- 「不要なバリデーション」  
+    ```ruby
+    belongs_to       :user
+    has_one_attached :image
+    default_scope -> { order(created_at: :desc) }
+    validates :user_id, presence: true
+    ```
+    > belongs_toでアソシエーションを定義しているのでこのバリデーションは不要です。  
+    > ちなみに nil を許容したい場合optional: trueを付与します。  
+    > https://techtechmedia.com/optional-true-rails/  
+
+    `validates` で「`user_id` の `presence` は `true` にしてね」と指定したが、
+    その後 `belongs_to` で `user` を指定している（アソシエーションを組んでいる）ので不要になった。
+
+    チュートリアルでは
+    ```ruby
+    test "user id should be present" do
+      @micropost.user_id = nil
+      assert_not @micropost.valid?
+    end
+    ```
+    userr_idが存在するか確かめるテストを書く前提で、
+    `validates :user_id, presence: true`
+    を定義しており、
+    ```ruby
+    # このコードは慣習的に正しくない
+    @micropost = Micropost.new(content: "Lorem ipsum", user_id: @user.id)
+    ```
+    を使ってマイクロポストを生成する場合では `validates` は不要だが
+    ```ruby
+    # 慣習的に正しい
+    @micropost = @user.microposts.build(content: "Lorem ipsum")
+    ```
+    とする場合に必要であると説明している。
+
+
+    なので、今回の例で `validates` を削除するなら
+    ```diff
+    - @micropost = @user.microposts.build(content: "Lorem ipsum")
+    + @micropost = Micropost.new(content: "Lorem ipsum", user_id: @user.id)
+    ```
+    とする必要がある。そうすればテストも無事通る。（コミットはチュートリアル通りです）
+
+- 「Ajaxでも出てきた `form_with` の `local`」  
+    > Rails 6.1からlocal: trueを明示的に指定する必要がなくなっています。  
+    > https://bon-voyage23.hatenablog.com/entry/2021/05/01/152200
+
+    普段は省略して書いて、Ajax使うときに明示的にfalseとすればOK。
