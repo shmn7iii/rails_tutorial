@@ -1,8 +1,19 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token, :activation_token
+  attr_accessor :remember_token, :activation_token, :reset_token
+
+  has_many      :microposts, dependent: :destroy
+  has_many      :active_relationships,  class_name:  "Relationship",
+                                        foreign_key: "follower_id",
+                                        dependent:   :destroy
+  has_many      :passive_relationships, class_name:  "Relationship",
+                                        foreign_key: "followed_id",
+                                        dependent:   :destroy
+  has_many      :following, through: :active_relationships,  source: :followed
+  has_many      :followers, through: :passive_relationships, source: :follower
 
   before_save   :downcase_email
   before_create :create_activation_digest
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   has_secure_password
 
@@ -51,6 +62,60 @@ class User < ApplicationRecord
   # 有効化用のメールを送信する
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
+  end
+
+  # パスワード再設定の属性を設定する
+  def create_reset_digest
+    self.reset_token = User.new_token
+    update_columns(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
+  end
+
+  # パスワード再設定のメールを送信する
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  # パスワード再設定の期限が切れている場合はtrueを返す
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
+  end
+
+  # ユーザーのステータスフィードを返す
+  def feed
+    # following_ids = "SELECT followed_id FROM relationships
+    #                  WHERE follower_id = :user_id"
+    # Micropost.where("user_id IN (#{following_ids})
+    #                  OR user_id = :user_id", user_id: id)
+
+    # following_ids = "SELECT followed_id FROM relationships
+    #                  WHERE follower_id = :user_id"
+    # Micropost.where(following_ids, user_id: id).or(Micropost.where(user_id: id))
+
+    # 演習14.3.3.3
+    # part_of_feed = "relationships.follower_id = :id or microposts.user_id = :id"
+    # Micropost.left_outer_joins(user: :followers)
+    #          .where(part_of_feed, { id: id }).distinct
+    #          .includes(:user, image_attachment: :blob)
+
+    # レビューより、さらに簡単にも書ける
+    following_ids = "user_id IN (SELECT followed_id FROM relationships
+                                 WHERE follower_id = #{id})"
+    Micropost.where(following_ids).or(Micropost.where(user_id: id))
+  end
+
+  # ユーザーをフォローする
+  def follow(other_user)
+    following << other_user
+  end
+
+  # ユーザーをフォロー解除する
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  # 現在のユーザーがフォローしてたらtrueを返す
+  def following?(other_user)
+    following.include?(other_user)
   end
 
   private
